@@ -1,1 +1,1 @@
-# rss-error
+# Random String Square Error
