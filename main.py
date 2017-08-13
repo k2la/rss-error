@@ -1,28 +1,30 @@
-import random
-import json
-width = 10
-height = 10
-random_width = random.choice(range(width))
-random_height = random.choice(range(height))
-geo = str(width)+"x"+str(height)
+import random, os, json
+
 if __name__ == '__main__':
 
     with open('data.json') as f:
         data = json.load(f)
 
-    random.shuffle(data['level1'])
-    for i in range(len(data['level1'])):
-        correct_word = data['level1'][i][0]
-        dummy_word = data['level1'][i][1]
-        with open("./q"+geo+"/q"+str(i)+"_"+geo, "w") as f:
-            for w in range(width):
-                for h in range(height):
-                    if w == random_width and h == random_height:
-                        f.write(dummy_word)
-                    else:
-                        f.write(correct_word)
-                f.write("\n")
+    for width, height in [(4,4), (6,6), (10,10)]:
 
+        random_width = random.choice(range(width))
+        random_height = random.choice(range(height))
+        geo = str(width) + "x" + str(height)
+        random.shuffle(data['level1'])
+
+        for i in range(len(data['level1'])):
+            correct_word = data['level1'][i][0]
+            dummy_word = data['level1'][i][1]
+            with open("./q"+geo+"/q"+str(i)+"_"+geo, "w") as f:
+                for w in range(width):
+                    for h in range(height):
+                        if w == random_width and h == random_height:
+                            f.write(dummy_word)
+                        else:
+                            f.write(correct_word)
+                    f.write("\n")
+
+    os.system('./q2png.sh')
 
     # when 4
     # convert -font ./AquaKana.ttc -size 800x800 -pointsize 200 label:@tmp tmp.png
