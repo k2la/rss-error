@@ -4,20 +4,34 @@ width = 10
 height = 10
 random_width = random.choice(range(width))
 random_height = random.choice(range(height))
-
+geo = str(width)+"x"+str(height)
 if __name__ == '__main__':
 
     with open('data.json') as f:
         data = json.load(f)
 
     random.shuffle(data['level1'])
-    correct_word = data['level1'][0][0]
-    dummy_word = data['level1'][0][1]
-    for w in range(width):
-        for h in range(height):
-            if w == random_width and h == random_height:
-                print(dummy_word, end="")
-            else:
-                print(correct_word, end="")
-        print()
+    for i in range(len(data['level1'])):
+        correct_word = data['level1'][i][0]
+        dummy_word = data['level1'][i][1]
+        with open("./q"+geo+"/q"+str(i)+"_"+geo, "w") as f:
+            for w in range(width):
+                for h in range(height):
+                    if w == random_width and h == random_height:
+                        f.write(dummy_word)
+                    else:
+                        f.write(correct_word)
+                f.write("\n")
 
+
+    # when 4
+    # convert -font ./AquaKana.ttc -size 800x800 -pointsize 200 label:@tmp tmp.png
+
+    # when 6
+    # convert -font ./AquaKana.ttc -size 600x600 -pointsize 100 label:@tmp tmp.png
+
+    # when 10
+    # convert -font ./AquaKana.ttc -size 1000x1000 -pointsize 100 label:@tmp tmp.png
+
+    # when 20
+    # convert -font ./AquaKana.ttc -size 1000x1000 -pointsize 50 label:@tmp tmp.png
